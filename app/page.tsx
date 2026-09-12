@@ -11,13 +11,21 @@ const galleryItems = [
   { src: "/assets/house-angle.jpeg", alt: "Residential roof and dormers", tag: "Roofing", caption: "Exterior Project · Kentucky" },
   { src: "/assets/roof-close.jpeg", alt: "Close view of finished shingles", tag: "Roof Detail", caption: "Residential Project" },
   { src: "/assets/house-back.jpeg", alt: "Rear view of finished residential roof", tag: "Completed Roof", caption: "Residential Project" },
+  { src: "/assets/roof-valley.jpeg", alt: "Aerial view of roof ridge and valley flashing", tag: "Roofing", caption: "Residential Project · Kentucky" },
+  { src: "/assets/roof-team.jpeg", alt: "Crew working on a residential roof with tarp staged below", tag: "Roofing", caption: "Team at Work" },
+  { src: "/assets/roof-gutter.jpeg", alt: "Roof edge with new gutter line over a pasture", tag: "Roofing", caption: "Gutter & Trim" },
+  { src: "/assets/roof-overview.jpeg", alt: "Ridge line view overlooking the property", tag: "Roofing", caption: "Completed Ridge" },
 ];
 
+function youtubeThumbnail(youtubeId: string) {
+  return `https://i.ytimg.com/vi/${youtubeId}/hqdefault.jpg`;
+}
+
 const videoItems = [
-  { key: "main", src: "/assets/work-process.jpeg", alt: "Roofing team working on a residential roof", category: "Roofing", title: "Roof Installation Process", youtubeId: "VzpUkh_mzFc" },
-  { key: "small-1", src: "/assets/roof-tarp.jpeg", alt: "Roof project in progress", category: "Remodeling", title: "Project Transformation", youtubeId: "PDpkS7wyOYo" },
-  { key: "small-2", src: "/assets/roof-detail.jpeg", alt: "Close-up roofing work detail", category: "Carpentry", title: "Behind the Build", youtubeId: "kIV9HYJAaUY" },
-];
+  { key: "main", alt: "Roofing team working on a residential roof", category: "Roofing", title: "Roof Installation Process", youtubeId: "VzpUkh_mzFc" },
+  { key: "small-1", alt: "Roof project in progress", category: "Remodeling", title: "Project Transformation", youtubeId: "PDpkS7wyOYo" },
+  { key: "small-2", alt: "Close-up roofing work detail", category: "Carpentry", title: "Behind the Build", youtubeId: "kIV9HYJAaUY" },
+].map((item) => ({ ...item, src: youtubeThumbnail(item.youtubeId) }));
 
 const processSteps = [
   { title: "Tell us about your project", desc: "Call or send the estimate form." },
