@@ -14,9 +14,9 @@ const galleryItems = [
 ];
 
 const videoItems = [
-  { key: "main", src: "/assets/work-process.jpeg", alt: "Roofing team working on a residential roof", category: "Roofing", title: "Roof Installation Process" },
-  { key: "small-1", src: "/assets/roof-tarp.jpeg", alt: "Roof project in progress", category: "Remodeling", title: "Project Transformation" },
-  { key: "small-2", src: "/assets/roof-detail.jpeg", alt: "Close-up roofing work detail", category: "Carpentry", title: "Behind the Build" },
+  { key: "main", src: "/assets/work-process.jpeg", alt: "Roofing team working on a residential roof", category: "Roofing", title: "Roof Installation Process", youtubeId: "VzpUkh_mzFc" },
+  { key: "small-1", src: "/assets/roof-tarp.jpeg", alt: "Roof project in progress", category: "Remodeling", title: "Project Transformation", youtubeId: "PDpkS7wyOYo" },
+  { key: "small-2", src: "/assets/roof-detail.jpeg", alt: "Close-up roofing work detail", category: "Carpentry", title: "Behind the Build", youtubeId: "kIV9HYJAaUY" },
 ];
 
 const processSteps = [
@@ -29,13 +29,13 @@ const processSteps = [
 
 export default function Home() {
   const [lightboxSrc, setLightboxSrc] = useState<string | null>(null);
-  const [videoTitle, setVideoTitle] = useState<string | null>(null);
+  const [activeVideo, setActiveVideo] = useState<(typeof videoItems)[number] | null>(null);
 
   useEffect(() => {
     function handleKeyDown(e: KeyboardEvent) {
       if (e.key === "Escape") {
         setLightboxSrc(null);
-        setVideoTitle(null);
+        setActiveVideo(null);
       }
     }
     document.addEventListener("keydown", handleKeyDown);
@@ -225,7 +225,7 @@ export default function Home() {
             <div className="video-layout">
               <article
                 className="video-main"
-                onClick={() => setVideoTitle(videoItems[0].title)}
+                onClick={() => setActiveVideo(videoItems[0])}
               >
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img src={videoItems[0].src} alt={videoItems[0].alt} />
@@ -240,7 +240,7 @@ export default function Home() {
                   <article
                     key={item.key}
                     className="video-small"
-                    onClick={() => setVideoTitle(item.title)}
+                    onClick={() => setActiveVideo(item)}
                   >
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img src={item.src} alt={item.alt} />
@@ -385,22 +385,26 @@ export default function Home() {
       </div>
 
       <div
-        className={`video-modal${videoTitle ? " open" : ""}`}
+        className={`video-modal${activeVideo ? " open" : ""}`}
         role="dialog"
         aria-modal="true"
         aria-label="Project video"
         onClick={(e) => {
-          if (e.target === e.currentTarget) setVideoTitle(null);
+          if (e.target === e.currentTarget) setActiveVideo(null);
         }}
       >
-        <button aria-label="Close" onClick={() => setVideoTitle(null)}>
+        <button aria-label="Close" onClick={() => setActiveVideo(null)}>
           ×
         </button>
-        <div className="video-placeholder">
-          <div>
-            <h3>{videoTitle ?? "Project Video"}</h3>
-            <p>Video-ready module. Replace this placeholder with the project&apos;s YouTube, Vimeo or MP4 URL when available.</p>
-          </div>
+        <div className="video-embed">
+          {activeVideo && (
+            <iframe
+              src={`https://www.youtube.com/embed/${activeVideo.youtubeId}?autoplay=1&rel=0`}
+              title={activeVideo.title}
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              allowFullScreen
+            />
+          )}
         </div>
       </div>
     </>
