@@ -407,7 +407,7 @@ export default function Home() {
         <div className="video-embed">
           {activeVideo && (
             <iframe
-              src={`https://www.youtube.com/embed/${activeVideo.youtubeId}?autoplay=1&rel=0`}
+              src={`https://www.youtube.com/embed/${activeVideo.youtubeId}?autoplay=1&mute=1&playsinline=1&rel=0`}
               title={activeVideo.title}
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
               allowFullScreen
